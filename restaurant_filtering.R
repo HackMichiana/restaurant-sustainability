@@ -1,10 +1,10 @@
 #Filters the dataset down to restaurants with active licences.
 
-Restaurant_Licenses <- subset(Business_Licenses, (Business_Licenses$Classification_Code == "RESTAM" | Business_Licenses$Classification_Code == "RESTZ"))
+Restaurant_Licenses <- subset(Business_Licenses, (Business_Licenses$Classification_Code == "RESTAM" | Business_Licenses$Classification_Code == "RESTZ" | Business_Licenses$Classification_Code == "RESTIT" | Business_Licenses$Classification_Code == "FVV"))
 
 # Filter out nonactive licenses
 
-Current_Licenses <- subset(Restaurant_Licenses, Restaurant_Licenses$License_Status != "IN" & Restaurant_Licenses$License_Status != "VO")
+Current_Licenses <- subset(Restaurant_Licenses, Restaurant_Licenses$License_Status != "IN" & Restaurant_Licenses$License_Status != "VO" & Restaurant_Licenses$License_Status != "OB")
 
 #Grab only the attributes we want. 
 
