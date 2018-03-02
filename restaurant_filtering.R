@@ -6,6 +6,7 @@ Restaurant_Licenses <- subset(Business_Licenses, (Business_Licenses$Classificati
 
 Current_Licenses <- subset(Restaurant_Licenses, Restaurant_Licenses$License_Status != "IN" & Restaurant_Licenses$License_Status != "VO" & Restaurant_Licenses$License_Status != "OB")
 
+
 #Grab only the attributes we want. 
 
 Final_Restaurant_Set <- data.frame(
@@ -17,6 +18,10 @@ Final_Restaurant_Set <- data.frame(
   Phone_Number = Current_Licenses$Business_Phone_Number
   
 )
+
+#Take out duplicates based on the business name.
+
+Final_Restaurant_Set <- Final_Restaurant_Set[!duplicated(Final_Restaurant_Set$Name),]
 
 #Write to CSV.
 
