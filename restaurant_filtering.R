@@ -21,9 +21,15 @@ Final_Restaurant_Set <- data.frame(
 
 #Take out duplicates based on the business name.
 
-Final_Restaurant_Set <- Final_Restaurant_Set[!duplicated(Final_Restaurant_Set$Name),]
+Restaurant_Set_Name_Dedupe <- Final_Restaurant_Set[!duplicated(Final_Restaurant_Set$Name),]
+
+#Create an alternate data set based on the business address.
+
+Restaurant_Set_Address_Dedupe <- Final_Restaurant_Set[!duplicated(Final_Restaurant_Set$Address),]
 
 #Write to CSV.
 
-write.csv(Final_Restaurant_Set, "restaurants.csv")
+write.csv(Restaurant_Set_Name_Dedupe, "restaurants_name.csv")
+
+write.csv(Restaurant_Set_Address_Dedupe, "restaurants_address.csv")
 
