@@ -27,9 +27,16 @@ Restaurant_Set_Name_Dedupe <- Final_Restaurant_Set[!duplicated(Final_Restaurant_
 
 Restaurant_Set_Address_Dedupe <- Final_Restaurant_Set[!duplicated(Final_Restaurant_Set$Address),]
 
+#Create a set that is a union of the name and address dedupes for a more comprehensive version of the dataset.
+# (uses the dplyr package)
+
+Comp_Set <- dplyr::union(Restaurant_Set_Address_Dedupe, Restaurant_Set_Name_Dedupe)
+
 #Write to CSV.
 
 write.csv(Restaurant_Set_Name_Dedupe, "restaurants_name.csv")
 
 write.csv(Restaurant_Set_Address_Dedupe, "restaurants_address.csv")
+
+write.csv(Comp_Set, "restaurants_union.csv")
 
