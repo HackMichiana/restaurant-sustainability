@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
+
   <head profile="http://www.w3.org/2005/10/profile">
-    <link rel="icon"
-    type="image/png"
-    href="./images/favicon.png">
+    <link rel="icon" type="image/png" href="./images/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -38,7 +38,7 @@
     </main>
 
     <main role="main" class="col-10 offset-1 pb-5">
-      <h4> Search Options: </h4>
+      <h3> Search Options: </h3>
       <div class="container">
         <form class="" action="index.html" method="post">
 
@@ -58,41 +58,41 @@
           </div>
           <hr>
           <div class="form-row">
-              <div class="col-3">
-                <label for="statusSelection" class="text-left">License Status:</label>
-                <select multiple class="form-control pl-3 custom-select" id="statusSelection">
+            <div class="col-3">
+              <label for="statusSelection" class="text-left"><h4>License Status:</h4></label>
+              <select multiple class="form-control pl-3 custom-select" id="statusSelection">
                   <option>---</option>
                 </select>
-              </div>
+            </div>
 
-              <div class="col-1 pt-5 text-center">
-                AND
-              </div>
+            <div class="col-1 pt-5 text-center">
+              AND
+            </div>
 
-              <div class="col-3">
-                <label for="licenseTypeSelection" class="text-left">License Type:</label>
-                <select multiple class="form-control pl-3 custom-select" id="licenseTypeSelection">
+            <div class="col-3">
+              <label for="licenseTypeSelection" class="text-left"><h4>License Type:</h4></label>
+              <select multiple class="form-control pl-3 custom-select" id="licenseTypeSelection">
                   <option>---</option>
                 </select>
-              </div>
+            </div>
 
-              <div class="col-1 pt-5 text-center">
-                AND
-              </div>
+            <div class="col-1 pt-5 text-center">
+              AND
+            </div>
 
-              <div class="col-3">
-                <label for="citySelection" class="text-left">City:</label>
-                <select multiple class="form-control pl-3 custom-select" id="citySelection">
+            <div class="col-3">
+              <label for="citySelection" class="text-left"><h4>City:</h4></label>
+              <select multiple class="form-control pl-3 custom-select" id="citySelection">
                   <option>---</option>
                 </select>
-              </div>
+            </div>
 
           </div>
 
         </form>
 
         <div class="col-6 offset-3 mt-3">
-            <button id="updateButton" type="button" class="btn btn-primary btn-lg btn-block" onclick="updateTableResults()" disabled>Update</button>
+          <button id="updateButton" type="button" class="btn btn-primary btn-lg btn-block" onclick="updateTableResults()" disabled>Update</button>
         </div>
       </div>
     </main>
@@ -102,13 +102,20 @@
 
         <div class="row">
 
-          <div class="col-2">
-            <h2 id="resultCount">Results: </h2>
+          <div class="col">
+            <h2 id="resultCount">Results: 15483</h2>
           </div>
 
-          <div class="col">
+          <div class="col-sm offset-4">
             <div class="text-right">
-                <button class="btn btn-sm btn-outline-secondary" onclick="exportResults()">Export Results</button>
+              <button class="btn btn-sm btn-outline-secondary" onclick="exportResults()">Export Results to CSV</button>
+            </div>
+          </div>
+
+          <div class="col-sm">
+            <div class="text-left">
+              <input type="checkbox" class="form-check-input" id="includeCSVHeader" checked>
+              <label class="form-check-label" for="includeCSVHeader">Include CSV File Header?</label>
             </div>
           </div>
 
@@ -125,7 +132,8 @@
             </div>
 
             <div class="col-3">
-              <div><h4 id="loaderText">Loading...</h4></div>
+              <div>
+                <h4 id="loaderText">Loading...</h4></div>
             </div>
           </div>
         </div>
@@ -153,18 +161,12 @@
       </div>
     </footer>
 
-
-
-
-
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-    src="http://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <!-- Add any other renderers you need; see Use Renderers for more information -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="./js/business-licenses.js"></script>
   </body>
-  </html>
+
+</html>

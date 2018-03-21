@@ -3835,7 +3835,7 @@ tbody.collapse.show {
 }
 
 .custom-select[multiple], .custom-select[size]:not([size="1"]) {
-  height: auto;
+  height: 200px;
   padding-right: 0.75rem;
   background-image: none;
 }
