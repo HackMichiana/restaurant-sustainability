@@ -10,9 +10,9 @@
 
 
 /* Golbal variables*/
-var lastFID = 0;                              //used to increment ajax call to server
-var businesses = [];                          //An Array of 'Business' objects
-
+var lastFID = 0; //used to increment ajax call to server
+var businesses = []; //An Array of 'Business' objects
+var results = [];
 //Selection lists for multi-select form fields:
 var statusSelection = [];
 var licenseTypeSelection = [];
@@ -39,7 +39,7 @@ request.onload = function() {
     */
     response = JSON.parse(request.responseText);
     //for each feature in features, passed as business add it to businesses
-    response.features.forEach(function(business){
+    response.features.forEach(function(business) {
       /*
       Dynamically create options for search selections (multi-select)
         set the status description to the next (last 0+1 etc) index of each selection
@@ -84,7 +84,7 @@ request.onload = function() {
    Check to see if the there are features in the request, if none, we are done.
     otherwise, set lastFID and make a request for more data.
   */
-  if(response.features.length > 0){
+  if (response.features.length > 0) {
     lastFID = response.features[response.features.length - 1].attributes.FID
     getMoreData();
   } else {
@@ -124,11 +124,11 @@ function addListingToTable(business) {
   that need to be replaced with '+' signs
   so that we can query google maps for them.
   */
-  var dirtyMapAddress =  business.Business_Name + '+'
-  + business.Street_Address + '+'
-  + business.City + '+'
-  + business.State + '+'
-  + business.Zip;
+  var dirtyMapAddress = business.Business_Name + '+' +
+    business.Street_Address + '+' +
+    business.City + '+' +
+    business.State + '+' +
+    business.Zip;
   var mapAddress = dirtyMapAddress.split(' ').join('+');
 
   //business.Issue_Date is a ISO Timestamp aka numeric '1592340523902'
@@ -137,34 +137,34 @@ function addListingToTable(business) {
 
 
   //If the business has no address, do not create a link for google maps.
-  if(business.Street_Address === "0 OUTSIDE CITY LIMITS") {
+  if (business.Street_Address === "0 OUTSIDE CITY LIMITS") {
     newTableRow.innerHTML =
-    '<td style="width:  5%">' + business.FID + '</td>'
-    + '<td style="width:  12.66%">' + business.Business_Name + '</td>'
-    + '<td style="width:  14.66%">'
-    + business.Street_Address + ', '
-    + business.City + ', '
-    + business.State + ' '
-    + business.Zip + ' '
-    + '</td>'
-    + '<td style="width:  10%">' + business.Business_Phone_Number + '</td>'
-    + '<td style="width:  10%">' + issueDate + '</td>'
-    + '<td style="width:  10%">' + business.License_Status_Description + '</td>'
+      '<td style="width:  5%">' + business.FID + '</td>' +
+      '<td style="width:  12.66%">' + business.Business_Name + '</td>' +
+      '<td style="width:  14.66%">' +
+      business.Street_Address + ', ' +
+      business.City + ', ' +
+      business.State + ' ' +
+      business.Zip + ' ' +
+      '</td>' +
+      '<td style="width:  10%">' + business.Business_Phone_Number + '</td>' +
+      '<td style="width:  10%">' + issueDate + '</td>' +
+      '<td style="width:  10%">' + business.License_Status_Description + '</td>'
   } else {
     newTableRow.innerHTML =
-    '<td style="width:  5%">' + business.FID + '</td>'
-    + '<td style="width:  12.66%">' + business.Business_Name + '</td>'
-    + '<td style="width:  14.66%">'
-    + '<a href="' + 'https://www.google.com/maps/search/' + mapAddress + '" target="_blank">'
-    + business.Street_Address + ', '
-    + business.City + ', '
-    + business.State + ' '
-    + business.Zip + ' '
-    + '</a>'
-    + '</td>'
-    + '<td style="width:  10%">' + business.Business_Phone_Number + '</td>'
-    + '<td style="width:  10%">' + issueDate + '</td>'
-    + '<td style="width:  10%">' + business.License_Status_Description + '</td>';
+      '<td style="width:  5%">' + business.FID + '</td>' +
+      '<td style="width:  12.66%">' + business.Business_Name + '</td>' +
+      '<td style="width:  14.66%">' +
+      '<a href="' + 'https://www.google.com/maps/search/' + mapAddress + '" target="_blank">' +
+      business.Street_Address + ', ' +
+      business.City + ', ' +
+      business.State + ' ' +
+      business.Zip + ' ' +
+      '</a>' +
+      '</td>' +
+      '<td style="width:  10%">' + business.Business_Phone_Number + '</td>' +
+      '<td style="width:  10%">' + issueDate + '</td>' +
+      '<td style="width:  10%">' + business.License_Status_Description + '</td>';
   }
 
   document.querySelector('tbody').appendChild(newTableRow);
@@ -198,19 +198,19 @@ function formatDate(date) {
  * @param  {String} field the id of multi-select field.
  * @param  {[String]} options an array of options to be added
  */
-function populateMultiSelect(field, options){
-  if (!field){
+function populateMultiSelect(field, options) {
+  if (!field) {
     //do nothing
   } else {
-      var selector = document.getElementById(field);
-      selector.options.length = 0;
+    var selector = document.getElementById(field);
+    selector.options.length = 0;
 
-      for (let i = 0; i <= options.length; i++){
-          let opt = document.createElement('option');
-          opt.value = options[i];
-          opt.innerHTML = options[i];
-          selector.appendChild(opt);
-      }
+    for (let i = 0; i <= options.length; i++) {
+      let opt = document.createElement('option');
+      opt.value = options[i];
+      opt.innerHTML = options[i];
+      selector.appendChild(opt);
+    }
   }
 }
 
@@ -221,7 +221,7 @@ function populateMultiSelect(field, options){
  * @return  {[String]} user selected options from the select field.
  */
 function getSelectValuesfor(field) {
-  if (!field){
+  if (!field) {
     //do nothing.
   } else {
     var selector = document.getElementById(field);
@@ -230,7 +230,7 @@ function getSelectValuesfor(field) {
     var options = selector && selector.options;
     var opt;
 
-    for (var i=0, iLen=options.length; i<iLen; i++) {
+    for (var i = 0, iLen = options.length; i < iLen; i++) {
       opt = options[i];
 
       if (opt.selected) {
@@ -250,22 +250,23 @@ function updateTableResults() {
   licenseTypeSelections = getSelectValuesfor('licenseTypeSelection');
   citySelections = getSelectValuesfor('citySelection');
 
-  var results = [];
-
-  //filter businesses
+  if(statusSelections.length == 0 && licenseTypeSelections.length == 0 && citySelections.length == 0){
+      results = businesses;
+  } else {
+    //filter businesses
     results = businesses.filter(function(b) {
-      if(statusSelections.includes(b.License_Status_Description) && licenseTypeSelections.includes(b.Classification_Description) && citySelections.includes(b.City)) {
-          return true
+      if (statusSelections.includes(b.License_Status_Description) && licenseTypeSelections.includes(b.Classification_Description) && citySelections.includes(b.City)) {
+        return true
       }
     });
+  }
 
-
-  if(results.length <= 0) {
+  if (results.length == 0) {
     //dont update the table. error message
     promptErrorWith("0 Results For That Query");
   } else {
     //update table
-      //get the old table body
+    //get the old table body
     var tbody = document.querySelector('tbody');
     var newtablebody = document.createElement('tbody');
     tbody.parentNode.replaceChild(newtablebody, tbody);
@@ -273,95 +274,163 @@ function updateTableResults() {
     let shouldShowDuplicates = document.getElementById('showDuplicates').checked;
 
     //should we show Duplicates?, if not filter them out.
-    if(shouldShowDuplicates) {
+    if (shouldShowDuplicates) {
       updateResult(results.length);
-      for(let i = 0; i < results.length; i++) {
+      for (let i = 0; i < results.length; i++) {
         addListingToTable(results[i]);
-        }
-      } else  {
-
-          var unique = {}; //Individual values not distinct
-          var distinct = []; //distinct objects containing unique values.
-          //for each result
-          for( var i in results ) {
-              //Cross reference phone number to records,
-              // if one like it doesn't exist already, add it to distinct
-            if( typeof(unique[results[i].Business_Phone_Number]) == "undefined"){
-              distinct.push(results[i]);
-            }
-            unique[results[i].Business_Phone_Number] = 0;
-          }
-          //update the table.
-          for(let i = 0; i < distinct.length; i++) {
-            addListingToTable(distinct[i])
-            }
-            //update results text field
-            updateResult(distinct.length);
-          }
       }
+    } else {
 
+      var unique = {}; //Individual values not distinct
+      var distinct = []; //distinct objects containing unique values.
+      //for each result
+      for (var i in results) {
+        //Cross reference phone number to records,
+        // if one like it doesn't exist already, add it to distinct
+        if (typeof(unique[results[i].Business_Phone_Number]) == "undefined") {
+          distinct.push(results[i]);
+        }
+        unique[results[i].Business_Phone_Number] = 0;
+      }
+      //update the table.
+      for (let i = 0; i < distinct.length; i++) {
+        addListingToTable(distinct[i])
+      }
+      //update results text field
+      updateResult(distinct.length);
+    }
   }
+
+}
 
 
 //we dont want to block the main thread.
 async function getData() {
   request.open('GET',
-  'https://services1.arcgis.com/0n2NelSAfR7gTkr1/arcgis/rest/services/Business_Licenses/FeatureServer/0/query?where=FID' + ' > ' + lastFID + ' AND FID <= ' + (lastFID + 500) + '&outFields=*&outSR=4326&f=json',
-  true);
+    'https://services1.arcgis.com/0n2NelSAfR7gTkr1/arcgis/rest/services/Business_Licenses/FeatureServer/0/query?where=FID' + ' > ' + lastFID + ' AND FID <= ' + (lastFID + 500) + '&outFields=*&outSR=4326&f=json',
+    true);
 
   //comment out the following line to quickly edit ui without making requests
   request.send();
 }
 
 /**
-* getMoreData - Fetches more data from the API Server.
-*
-*/
+ * getMoreData - Fetches more data from the API Server.
+ *
+ */
 function getMoreData() {
   //so long as we are getting listings, continue...
-  if(response.features.length > 0){
+  if (response.features.length > 0) {
     let percent = (lastFID / 15000) * 100;
 
     percent = Math.floor(percent);
-      if(percent > 100) {
-          percent = 100;
-        }
-      document.getElementById('loaderText').textContent = "Loading " + percent + "%";
-
-      updateResult(businesses.length);
-      getData();
+    if (percent > 100) {
+      percent = 100;
     }
-    //else stop.
+    document.getElementById('loaderText').textContent = "Loading " + percent + "%";
+
+    updateResult(businesses.length);
+    getData();
+  }
+  //else stop.
 }
 
 /**
-* exportResults - Exports Results (table listings) to CSV
-*
-*/
+ * exportResults - Exports Results (table listings) to CSV
+ *
+ */
 function exportResults() {
-  alert("This feature is not implemented yet :'( ")
+  var filename = 'HM-BusinessLicenseResults_' + (new Date()).getTime() + '.csv';
+  var charset = "utf-8";
+  var items;
+
+  if (results.length <= 0){
+      items = convertToCSV(businesses);
+  } else {
+      items = convertToCSV(results);
+  }
+
+  var blob = new Blob([items], {
+    type: "text/csv;charset=" + charset + ";"
+  });
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveBlob(blob, filename);
+  } else {
+    var downloadLink = document.createElement('a');
+    downloadLink.setAttribute('href', window.URL.createObjectURL(blob));
+    downloadLink.setAttribute('download', filename);
+    downloadLink.setAttribute('target', '_blank');
+    document.body.append(downloadLink);
+    downloadLink.click();
+  }
+}
+
+
+
+
+/**
+ * convertToCSV - Converts an Array of Objects = [{},{}] to CSV readable string, removes commas from values.
+ * @param  {[Object]} objectArray the object array to convert.
+ */
+function convertToCSV(objectArray) {
+  var header = "FID, Business Name, Business Phone Number, Address, District, License Status, Issue Date, Expiration Date" + "\r\n";
+  var str = '';
+
+  let shouldIncludeHeader = document.getElementById('includeCSVHeader').checked;
+  //should we add the header?
+  if (shouldIncludeHeader) {
+    str += header;
+  }
+
+  var values = objectArray.map(d => {
+    return Object.values(d)
+  });
+
+  for (var i = 0; i < values.length; i++) {
+    //Clean values of commas null and return
+    for (var j = 0; j < values[i].length; j++) {
+      //replace commas with spaces
+      //replace return or new line with nothing.
+      //replace anymore than 2 spaces with a single space.
+      values[i][j] = String(values[i][j]).replace(/,/g, ' ').replace(/[\n\r]+/g, '').replace(/\s{2,10}/g, ' ');
+    }
+
+    let issuedate = formatDate(new Date(Number(values[i][10])));
+    let expdate = formatDate(new Date(Number(values[i][9])));
+
+    var lineItem = values[i][17] + ',' +
+      values[i][1] + ',' +
+      values[i][6] + ',' +
+      values[i][2] + ' ' + values[i][3] + ' ' + values[i][4] + ' ' + values[i][5] + ',' +
+      values[i][15] + ',' +
+      values[i][13] + ',' +
+      issuedate + ',' +
+      expdate + "\r\n";
+    str += lineItem;
+  }
+  return str;
 }
 
 
 /**
-* updateResult - updates the results text with number of results.
-* @param  {Integer} count the number of returned results from query.
-*/
+ * updateResult - updates the results text with number of results.
+ * @param  {Integer} count the number of returned results from query.
+ */
 function updateResult(count) {
   document.getElementById('resultCount').textContent = "Results: " + count;
 }
 
 
 /**
-* promptErrorWith - Prompts the user with a div above the data table, disappears after 5 seconds.
-* @param {String} message the message to the user.
-*/
+ * promptErrorWith - Prompts the user with a div above the data table, disappears after 5 seconds.
+ * @param {String} message the message to the user.
+ */
 function promptErrorWith(message) {
   var prompt = document.getElementById('prompt');
   prompt.className = "col-6 offset-3 mt-3 alert alert-danger text-center";
-  prompt.textContent =  message;
+  prompt.textContent = message;
 
-  setTimeout(function(){
+  setTimeout(function() {
     document.getElementById('prompt').innerHTML = '';
     document.getElementById('prompt').className = '';
   }, 5000);
