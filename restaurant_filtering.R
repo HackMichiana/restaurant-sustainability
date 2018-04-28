@@ -32,6 +32,14 @@ Restaurant_Set_Address_Dedupe <- Final_Restaurant_Set[!duplicated(Final_Restaura
 
 Comp_Set <- dplyr::union(Restaurant_Set_Address_Dedupe, Restaurant_Set_Name_Dedupe)
 
+# Create another alternate data set based on phone number.
+
+Restaurant_Set_Phone_Dedupe <- Final_Restaurant_Set[!duplicated(Final_Restaurant_Set$Phone_Number),]
+
+# Using the version of the union set that has the category of chain vs. local, filter out the chains.
+
+local_restaurants <- subset(restaurants_union_Class, restaurants_union_Class$`Local or Chain` == 'Local')
+
 #Write to CSV.
 
 write.csv(Restaurant_Set_Name_Dedupe, "restaurants_name.csv")
@@ -39,4 +47,8 @@ write.csv(Restaurant_Set_Name_Dedupe, "restaurants_name.csv")
 write.csv(Restaurant_Set_Address_Dedupe, "restaurants_address.csv")
 
 write.csv(Comp_Set, "restaurants_union.csv")
+
+write.csv(Restaurant_Set_Phone_Dedupe, "restaurants_phone.csv")
+
+write.csv(local_restaurants, "local_restaurants.csv")
 
